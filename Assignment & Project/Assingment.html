@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SZY Material Sport Shop</title>
+    <!-- Inter Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- External CSS file -->
+    <link rel="stylesheet" href="/Assignment.css" />
+  </head>
+  <body class="min-h-screen app-body">
+    <div id="app" class="app-container">
+      <!-- Main Application Layout (visible by default as user dashboard) -->
+      <div id="main-app-container" class="main-app-container">
+        <header class="app-header">
+          <div class="container header-content">
+            <h1 id="app-title" class="header-title">
+              SZY Sport Shop - User Dashboard
+            </h1>
+            <div class="header-user-info">
+              <span id="header-user-id" class="header-user-id"
+                >User ID: user_szy_12345 (Data persistent locally)</span
+              >
+              <button id="switch-role-btn" class="switch-role-button">
+                Switch to Admin
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main class="container main-content">
+          <!-- User Dashboard -->
+          <div id="user-dashboard" class="user-dashboard">
+            <div class="products-section">
+              <h2 class="section-title">Available Products</h2>
+              <div id="products-list" class="products-grid">
+                <!-- Products will be loaded here dynamically by JavaScript -->
+                <p class="initial-loading-message">Loading products...</p>
+              </div>
+            </div>
+
+            <div class="cart-section">
+              <h2 class="section-title cart-header">
+                Your Cart (<span id="cart-item-count">0</span>)
+                <button id="toggle-cart-btn" class="toggle-cart-button">
+                  Show Cart
+                </button>
+              </h2>
+              <div id="cart-details" class="cart-details hidden">
+                <ul id="cart-items-list" class="cart-items-list">
+                  <!-- Cart items will be loaded here -->
+                </ul>
+                <div class="cart-summary">
+                  <p class="cart-total-text">
+                    Total: $<span id="cart-total">0.00</span>
+                  </p>
+                  <button id="place-order-btn" class="place-order-button">
+                    Place Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Dashboard -->
+          <div id="admin-dashboard" class="admin-dashboard hidden">
+            <div class="admin-tabs">
+              <nav class="tab-nav" aria-label="Tabs">
+                <button id="admin-products-tab" class="tab-button active-tab">
+                  Product Management
+                </button>
+                <button id="admin-orders-tab" class="tab-button">
+                  Order Management
+                </button>
+              </nav>
+            </div>
+
+            <!-- Admin Product Management Section -->
+            <div id="admin-products-section" class="admin-section">
+              <h2 class="section-title">Add New Product</h2>
+              <form id="product-form" class="product-form">
+                <div>
+                  <label for="product-name" class="form-label"
+                    >Product Name</label
+                  >
+                  <input
+                    type="text"
+                    id="product-name"
+                    class="form-input"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="product-price" class="form-label">Price</label>
+                  <input
+                    type="number"
+                    id="product-price"
+                    class="form-input"
+                    step="0.01"
+                    required
+                  />
+                </div>
+                <div class="form-col-span-2">
+                  <label for="product-description" class="form-label"
+                    >Description</label
+                  >
+                  <textarea
+                    id="product-description"
+                    rows="3"
+                    class="form-input"
+                    required
+                  ></textarea>
+                </div>
+                <div class="form-col-span-2">
+                  <label for="product-image-url" class="form-label"
+                    >Image URL</label
+                  >
+                  <input
+                    type="url"
+                    id="product-image-url"
+                    class="form-input"
+                    required
+                  />
+                </div>
+                <div class="form-col-span-2 form-actions">
+                  <button
+                    type="button"
+                    id="cancel-edit-btn"
+                    class="button secondary-button"
+                  >
+                    Cancel Edit
+                  </button>
+                  <button
+                    type="submit"
+                    id="add-update-product-btn"
+                    class="button primary-button"
+                  >
+                    Add Product
+                  </button>
+                </div>
+              </form>
+
+              <h2 class="section-title mt-8">Existing Products</h2>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead class="table-header">
+                    <tr>
+                      <th scope="col" class="table-th">Image</th>
+                      <th scope="col" class="table-th">Name</th>
+                      <th scope="col" class="table-th">Price</th>
+                      <th scope="col" class="table-th">Description</th>
+                      <th scope="col" class="table-th">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-products-table-body" class="table-body">
+                    <!-- Products will be loaded here -->
+                  </tbody>
+                </table>
+              </div>
+              <button
+                id="clear-local-data-btn"
+                class="button secondary-button mt-4"
+              >
+                Clear All Local Data
+              </button>
+            </div>
+
+            <!-- Admin Order Management Section -->
+            <div id="admin-orders-section" class="admin-section hidden">
+              <h2 class="section-title">Customer Orders</h2>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead class="table-header">
+                    <tr>
+                      <th scope="col" class="table-th">Order ID</th>
+                      <th scope="col" class="table-th">User ID</th>
+                      <th scope="col" class="table-th">Items</th>
+                      <th scope="col" class="table-th">Total</th>
+                      <th scope="col" class="table-th">Order Date</th>
+                      <th scope="col" class="table-th">Status</th>
+                      <th scope="col" class="table-th">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-orders-table-body" class="table-body">
+                    <!-- Orders will be loaded here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer class="app-footer">
+          <p>
+            &copy; <span id="current-year"></span> SZY Material Sport Shop. All
+            rights reserved.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Custom Alert/Confirmation Modal -->
+    <div id="custom-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p id="modal-message" class="modal-message"></p>
+        <div id="modal-actions" class="modal-actions">
+          <button id="modal-cancel-btn" class="button modal-cancel-button">
+            Cancel
+          </button>
+          <button id="modal-confirm-btn" class="button modal-confirm-button">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- External JavaScript file -->
+    <script src="/Assingment.js"></script>
+  </body>
+</html>
